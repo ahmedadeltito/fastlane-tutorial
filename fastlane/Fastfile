@@ -62,7 +62,7 @@ platform :android do
             notes_path: "./changelog.txt"
         )
         slack(
-            message: msg,
+            message: ""Build is successfully submitted to the Crashlytics Beta Builds and an email of this build is successfully sent to the Quality Assurance Team",
             success: true,
             slack_url: "https://hooks.slack.com/services/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",
             attachment_properties: {
