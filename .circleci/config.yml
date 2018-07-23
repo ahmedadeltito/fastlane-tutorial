@@ -114,6 +114,10 @@ workflows:
   workflow:
     jobs:
       - test_unit
+          filters:
+            branches:
+              only:
+                - master
       - deploy_crashlytics:
           filters:
             branches:
