@@ -113,7 +113,7 @@ workflows:
   version: 2
   workflow:
     jobs:
-#      - test_unit
+      - test_unit
       - deploy_crashlytics:
           filters:
             branches:
