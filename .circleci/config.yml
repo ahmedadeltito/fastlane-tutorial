@@ -114,9 +114,6 @@ workflows:
   workflow:
     jobs:
       - test_unit
-      - test_instrumentation:
-          requires:
-            - test_unit
       - deploy_crashlytics:
           filters:
             branches:
@@ -124,7 +121,6 @@ workflows:
                 - beta
           requires:
             - test_unit
-            - test_instrumentation
       - deploy_play_store:
           filters:
             branches:
@@ -132,4 +128,3 @@ workflows:
                 - production
           requires:
             - test_unit
-            - test_instrumentation
