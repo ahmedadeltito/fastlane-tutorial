@@ -53,20 +53,12 @@ platform :android do
       gradle_task: "connectedDebugAndroidTest")
   end
 
-  desc "Run instrumentation tests in Firebase Test Lab"
-  lane :instrumentation_tests_testlab do
-    assemble
-    run_tests_firebase_testlab(
-      project_id: "project-id",
-      model: "Nexus6P",
-      version: "27",
-      delete_firebase_files: true)
-  end
-
   desc "Submit a new Beta Build to Crashlytics"
   lane :deploy_to_crashlytics do
     assemble_build
-    crashlytics
+    crashlytics(
+        emails: 'ahmed.adel.said@gmail.com,farrag91@gmail.com'
+    )
   end
 
   desc "Deploy a new version to the Google Play"
@@ -74,4 +66,5 @@ platform :android do
     assemble_build release:true
     upload_to_play_store
   end
+
 end
