@@ -44,7 +44,7 @@ references:
     save_cache:
       key: *gems_key
       paths:
-        - vendor/bundle
+        - ./vendor/bundle
 
   ## Dependencies
   ruby_dependencies: &ruby_dependencies
