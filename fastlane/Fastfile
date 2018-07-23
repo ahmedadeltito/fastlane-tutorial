@@ -41,7 +41,11 @@ platform :android do
 
   desc "Run unit tests"
   lane :unit_tests do |options|
-    gradle(task: "test", build_type: @build_type)
+    begin
+        gradle(task: "test", build_type: @build_type)
+        on_success("Build is successfully built.")
+    rescue => exception
+        on_error(exception)
   end
 
   desc "Run instrumentation tests"
