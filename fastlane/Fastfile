@@ -41,7 +41,11 @@ platform :android do
 
   desc "Run unit tests"
   lane :unit_tests do |options|
-    gradle(task: "test", build_type: @build_type)
+    begin
+        gradle(task: "test", build_type: @build_type)
+        on_success("Build is successfully built.")
+    rescue => exception
+        on_error(exception)
   end
 
   desc "Run instrumentation tests"
@@ -55,17 +59,58 @@ platform :android do
 
   desc "Submit a new Beta Build to Crashlytics"
   lane :deploy_to_crashlytics do
-    assemble_build
-    crashlytics(
-        groups: ['quality-assurance'],
-        notes_path: "./changelog.txt"
-    )
+    begin
+        assemble_build
+        crashlytics(
+            groups: ['quality-assurance'],
+            notes_path: "./changelog.txt"
+        )
+        on_success("Build is successfully submitted to the Crashlytics Beta Builds and an email of this build is successfully sent to the Quality Assurance Team")
+    rescue => exception
+        on_error(exception)
   end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy_to_play_store do
     assemble_build release:true
     upload_to_play_store
+  end
+
+  def on_success(msg)
+     slack(
+         message: msg,
+         success: true,
+         slack_url: "https://hooks.slack.com/services/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",
+         attachment_properties: {
+             fields: [
+                 {
+                     title: "Build number",
+                     value: ENV["BUILD_NUMBER"],
+                 }
+             ]
+         }
+     )
+  end
+
+  def on_error(exception)
+     slack(
+         message: "Some thing goes wrong",
+         success: false,
+         slack_url: "https://hooks.slack.com/services/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",
+         attachment_properties: {
+             fields: [
+                 {
+                     title: "Build number",
+                     value: ENV["BUILD_NUMBER"],
+                 },
+                 {
+                     title: "Error message",
+                     value: exception.to_s,
+                     short: false
+                 }
+             ]
+         }
+     )
   end
 
 end
