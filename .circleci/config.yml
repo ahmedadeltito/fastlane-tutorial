@@ -12,7 +12,7 @@ references:
   android_config: &android_config
     working_directory: *workspace
     docker:
-      - image: circleci/android:api-27
+      - image: circleci/android:api-27-alpha
     environment:
       TERM: dumb
       _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
@@ -113,12 +113,12 @@ workflows:
   version: 2
   workflow:
     jobs:
-#      - test_unit
+      - test_unit
       - deploy_crashlytics:
           filters:
             branches:
               only:
-                - beta
+                - develop
           requires:
             - test_unit
 #      - deploy_play_store:

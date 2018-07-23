@@ -57,7 +57,8 @@ platform :android do
   lane :deploy_to_crashlytics do
     assemble_build
     crashlytics(
-        emails: 'ahmed.adel.said@gmail.com,farrag91@gmail.com'
+        groups: ['quality-assurance'],
+        notes_path: "./changelog.txt"
     )
   end
 
