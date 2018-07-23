@@ -118,7 +118,7 @@ workflows:
           filters:
             branches:
               only:
-                - beta
+                - develop
           requires:
             - test_unit
 #      - deploy_play_store:
