@@ -118,6 +118,7 @@ workflows:
             branches:
               only:
                 - master
+                - develop
       - deploy_crashlytics:
           filters:
             branches:
